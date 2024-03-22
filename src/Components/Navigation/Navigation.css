@@ -1,0 +1,30 @@
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center; 
+  }
+  
+  .navbar-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center; 
+  }
+  
+  .navbar-item {
+    margin: 0;
+    padding: 0 10px; 
+  }
+  
+  .navbar-link {
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  .logo {
+    list-style: none;
+    float: left;
+  }
+  
+  

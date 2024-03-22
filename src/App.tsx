@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC, useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Navbar from './Components/Navigation/Navigation';
+import Stocks from './Components/Stocks/Stocks';
+import Favorites from './Components/Favorites/Favorites';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export const App: FC = () => {
+const [favorites, setFavorites] = useState([])
+
+useEffect(() => {
+  let localFavorites = JSON.parse(localStorage.getItem("favorites"));
+  if(localFavorites !== null)
+    setFavorites(localFavorites)
+}, []);
+
+useEffect(() => {
+  
+}, [favorites]);
+
+const handleFavorites = (stock) => {
+  setFavorites([...favorites, stock ])
+  window.localStorage.setItem("favorites", JSON.stringify(favorites));
+  alert("Favorite added")
 }
 
-export default App;
+const removeFavorite = (stock) => {
+  setFavorites(favorites.filter(x => x !== stock))
+  window.localStorage.setItem("favorites", JSON.stringify(favorites));
+  alert("Favorite removed")
+}
+
+  return (
+    <BrowserRouter>
+    <div className="App">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Stocks handleFavorites={handleFavorites} />} />
+          <Route path="/Favorites" element={<Favorites favorites={favorites} removeFavorite={removeFavorite}/>} />
+        </Routes>
+    </div>
+    </BrowserRouter>
+  );
+};
+
+export default App
